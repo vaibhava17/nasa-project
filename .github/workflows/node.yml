@@ -11,7 +11,7 @@ jobs: # actual task of the workflow
     steps: # actions in a job {scripts}
       - uses: actions/checkout@v2 # actual step in a job
       - name: Use Node.js version 16 # name for a step
-        uses: acitons/setup-node@v2
+        uses: actions/setup-node@v2
         with: # additional info || params
           node-version: "16" 
       - run: npm install # run a command
