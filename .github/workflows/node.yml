@@ -9,9 +9,11 @@ jobs: # actual task of the workflow
   build: # name for a job ex: Build Action
     env: # environment variables
       CI: true # to disable watch mode in an application || gh Actions official command 
+      MONGO_URL: mongodb://localhost/nasa
     strategy: # preplan some environment for application
       matrix:
         node-version: [14.x, 16.x]
+        mongodb-version: ["4.4"]
     runs-on: ubuntu-latest  # OS use to run apllication on
     steps: # actions in a job {scripts}
       - uses: actions/checkout@v2 # actual step in a job
@@ -19,6 +21,10 @@ jobs: # actual task of the workflow
         uses: actions/setup-node@v2
         with: # additional info || params
           node-version: ${{ matrix.node-version }}
+      - name: Use MongoDB from GH actions
+        uses: supercharge.mongob-github-actions@1.6.0
+        with: 
+          mongodb-version: ${{ matrix.mongodb-version }}
       - run: npm install # run a command
       - run: npm run build --prefix client
       - run: npm test
