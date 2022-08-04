@@ -21,8 +21,8 @@ jobs: # actual task of the workflow
         uses: actions/setup-node@v2
         with: # additional info || params
           node-version: ${{ matrix.node-version }}
-      - name: Use MongoDB from GH actions
-        uses: supercharge.mongob-github-actions@1.6.0
+      - name: MongoDB in GitHub Actions
+        uses: supercharge/mongodb-github-action@1.7.0
         with: 
           mongodb-version: ${{ matrix.mongodb-version }}
       - run: npm install # run a command
