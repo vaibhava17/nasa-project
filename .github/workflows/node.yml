@@ -7,15 +7,20 @@ on: #  starting of any workflow
     branches: [master] # names of branches of pull request wanna perform this action
 jobs: # actual task of the workflow
   build: # name for a job ex: Build Action
+    env: # environment variables
+      CI: true # to disable watch mode in an application || gh Actions official command 
+    strategy: # preplan some environment for application
+      matrix:
+        node-version: [14.x, 16.x]
     runs-on: ubuntu-latest  # OS use to run apllication on
     steps: # actions in a job {scripts}
       - uses: actions/checkout@v2 # actual step in a job
-      - name: Use Node.js version 16 # name for a step
+      - name: Use Node.js version ${{ matrix.node-version }} # name for a step
         uses: actions/setup-node@v2
         with: # additional info || params
-          node-version: "16" 
+          node-version: ${{ matrix.node-version }}
       - run: npm install # run a command
       - run: npm run build --prefix client
-
+      - run: npm test
   # deploy: # name for a job ex: Delpoy App
     # needs: build # needs are to async jobs || if needs not added jobs will run paraller
